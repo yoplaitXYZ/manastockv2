@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Stock
+                <small>({{ produits| length }})</small>
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+
+            <table class="table table-hover ">
+                <thead>
+                <tr>
+                    <th>Libellé</th>
+                    <th>Ref</th>
+                    <th>Prix d'achat</th>
+                    <th>Prix de vente</th>
+                    <th>TVA</th>
+                    {% if app.user is defined and (is_granted('ROLE_ADMINISTRATEUR') or  is_granted('ROLE_MAGASINIER')) %}
+                    <th class="text-center">Action</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+
+
+                {% for produit in produits %}
+                    <tr>
+                        <td>{{ produit.libelle }}</td>
+                        <td>{{ produit.reference }}</td>
+                        <td>{{ produit.prixachat }}</td>
+                        <td>{{ produit.prixvente }}</td>
+                        <td>{{ produit.tva }}</td>
+                        <td class="text-center">
+
+                            {% if app.user is defined and (is_granted('ROLE_ADMINISTRATEUR') or  is_granted('ROLE_MAGASINIER')) %}
+                                <a href="{{ path('produit_supp',{'id':produit.id }) }}" class="btn btn-xs btn-danger"><i
+                                            class="glyphicon glyphicon-trash"></i> Supp</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

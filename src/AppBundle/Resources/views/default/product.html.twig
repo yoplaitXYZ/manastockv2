@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section id="explore">
+        <div class="container">
+            {% for message in app.session.flashbag.get('success') %}
+                {{ message }}
+            {% endfor %}
+
+            <a href="{{ path('homepage') }}" class="btn btn-info pull-right" role="button">Back to the list</a>
+
+            {{ form_start(produitForm) }}
+            {{ form_widget(produitForm) }}
+
+            <button type="submit" class="btn btn-primary pull-right">
+                {% if 'produit_add' == app.request.get('_route') %}Create{% else %}Update{% endif %}
+            </button>
+            {{ form_end(produitForm) }}
+        </div>
+    </section>
+{% endblock %}
